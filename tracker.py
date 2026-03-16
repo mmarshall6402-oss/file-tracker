@@ -1,6 +1,12 @@
-import os
 
-folder = "sample_files"
+import os
+import sys
+
+if len(sys.argv) < 2:
+    print("Usage: python tracker.py <folder_path>")
+    sys.exit()
+
+folder = sys.argv[1]
 
 file_count = {}
 
@@ -10,14 +16,9 @@ for file in os.listdir(folder):
     else:
         ext = "no_extension"
 
-    if ext in file_count:
-        file_count[ext] += 1
-    else:
-        file_count[ext] = 1
+    file_count[ext] = file_count.get(ext, 0) + 1
 
-print("File Summary:\n")
+print("\nFile Summary:\n")
 
-for ext in file_count:
-    print(ext, ":", file_count[ext], "files")
-
-
+for ext, count in file_count.items():
+    print(f"{ext}: {count} files")
